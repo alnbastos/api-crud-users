@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from app.models import User
+from app.schemas import User
+from database.firebase import Database
 
 app = FastAPI()
 
@@ -9,4 +10,6 @@ def read_root():
 
 @app.post("/users/")
 def create_user(users: User):
+    data_dict = dict(users)
+    Database().create(collection='users', document='2', data=data_dict)
     return users
