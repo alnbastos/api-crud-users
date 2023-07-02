@@ -9,15 +9,19 @@ database = Firestore()
 def read_root():
     return {"message": "Hello World!"}
 
-@app.post("/users/")
+@app.post("/users/create/")
 def create_user(users: User):
     database.create(collection='users', data=dict(users))
     return {'user': 'Registered user.'}
 
-@app.get('/users/{user_id}')
-def read_user(user_id: str):
-    data = database.read(collection='users', document=user_id)
-    if data.exists:
-        return {'user': data.to_dict()}
-    else:
-        return {'user': 'User does not exists.'}
+@app.get('/users/')
+def read_user():
+    list_users = list()
+
+    for user in database.read_all('users'):
+        dict_user = user.to_dict()
+        dict_user['id'] = user.id
+
+        list_users.append(dict_user)
+
+    return {'user': list_users}
