@@ -15,8 +15,8 @@ class TestCreateUser:
 
         for data_error in data_errors:
             result = requests.get(f'http://127.0.0.1:8000/users/{data_error}')
-            result_mensage = json.loads(result.content)
+            result_message = json.loads(result.content)
 
             assert result.status_code == 200
-            assert result_mensage == {'user': 'User not exists.'}
+            assert result_message == {'user': 'User does not exists.'}
 

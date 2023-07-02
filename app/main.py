@@ -11,9 +11,8 @@ def read_root():
 
 @app.post("/users/")
 def create_user(users: User):
-    data_dict = dict(users)
-    database.create(collection='users', document='2', data=data_dict)
-    return users
+    database.create(collection='users', data=dict(users))
+    return {'user': 'Registered user.'}
 
 @app.get('/users/{user_id}')
 def read_user(user_id: str):
@@ -21,4 +20,4 @@ def read_user(user_id: str):
     if data.exists:
         return {'user': data.to_dict()}
     else:
-        return {'user': 'User not exists.'}
+        return {'user': 'User does not exists.'}

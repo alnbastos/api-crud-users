@@ -11,5 +11,8 @@ class TestCreateUser:
         }
 
         result = requests.post('http://127.0.0.1:8000/users/', data=json.dumps(data))
+        result_message = json.loads(result.content)
 
         assert result.status_code == 200
+        assert result_message == {'user': 'Registered user.'}
+

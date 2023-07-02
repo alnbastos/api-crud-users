@@ -15,9 +15,8 @@ class Firestore:
         self.db = firestore.client()
 
 
-    def create(self, collection, document, data):
-        doc_ref = self.db.collection(collection).document(document)
-        doc_ref.set(data)
+    def create(self, collection, data):
+        return self.db.collection(collection).add(data)
 
 
     def read(self, collection, document):
