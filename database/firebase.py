@@ -10,7 +10,7 @@ full_directory = os.path.join(file_path, 'key_database.json')
 cred = credentials.Certificate(full_directory)
 firebase_admin.initialize_app(cred)
 
-class Database:
+class Firestore:
     def __init__(self):
         self.db = firestore.client()
 
@@ -19,4 +19,7 @@ class Database:
         doc_ref = self.db.collection(collection).document(document)
         doc_ref.set(data)
 
+
+    def read(self, collection, document):
+        return self.db.collection(collection).document(document).get()
 
