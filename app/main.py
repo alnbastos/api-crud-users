@@ -18,4 +18,7 @@ def create_user(users: User):
 @app.get('/users/{user_id}')
 def read_user(user_id: str):
     data = database.read(collection='users', document=user_id)
-    return {'user': data.to_dict()}
+    if data.exists:
+        return {'user': data.to_dict()}
+    else:
+        return {'user': 'User not exists.'}
