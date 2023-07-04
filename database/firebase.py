@@ -19,6 +19,9 @@ class Firestore:
         return self.db.collection(collection).add(data)
 
 
-    def read(self, collection, document):
+    def read_one(self, collection, document):
         return self.db.collection(collection).document(document).get()
 
+
+    def read_all(self, collection):
+        return self.db.collection(collection).stream()
