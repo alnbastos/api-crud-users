@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.schemas import User
 from database.firebase import Firestore
+from app.utils import hash_password
 
 app = FastAPI()
 database = Firestore()
@@ -11,7 +12,10 @@ def read_root():
 
 @app.post("/users/create/")
 def create_user(users: User):
-    database.create(collection='users', data=dict(users))
+    user = dict(users)
+    user['password'] = hash_password(user['password'])
+
+    database.create(collection='users', data=user)
     return {'user': 'Registered user.'}
 
 @app.get('/users/')
